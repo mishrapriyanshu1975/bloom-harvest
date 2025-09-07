@@ -84,7 +84,7 @@ export const products = [
   },
   {
     id: 8,
-    name: "Grass-Fed Beef",
+    name: "Grass-Fed Mutton",
     category: "Meat",
     price: 450,
     unit: "lb",
@@ -92,7 +92,7 @@ export const products = [
     badge: "Premium",
     discount: true,
     oldPrice: 520,
-    description: "Ethically raised grass-fed beef from local farms. Lean, tender, and full of flavor without antibiotics or hormones."
+    description: "Ethically raised grass-fed mutton from local farms. Lean, tender, and full of flavor without antibiotics or hormones."
   },
   {
     id: 9,
