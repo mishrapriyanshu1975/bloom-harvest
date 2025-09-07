@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
@@ -99,13 +99,16 @@ const ImageUpload = () => {
     }
   }, [isAnalyzing]);
 
-  const analyzeImage = async () => {
-    if (!selectedImage) {
-      toast({
-        title: "No image selected",
-        description: "Please select an image to analyze.",
-        variant: "destructive"
-      });
+  const analyzeImage = useCallback(async () => {
+    // Prevent double-click and multiple simultaneous requests
+    if (!selectedImage || isAnalyzing) {
+      if (!selectedImage) {
+        toast({
+          title: "No image selected",
+          description: "Please select an image to analyze.",
+          variant: "destructive"
+        });
+      }
       return;
     }
 
@@ -122,10 +125,11 @@ const ImageUpload = () => {
         }
       });
 
+      console.log("Supabase function response:", { data, error });
+
       // Handle both success and fallback cases
       if (error) {
         console.error("Supabase function error:", error);
-        // Provide fallback analysis
         setAnalysisProgress(100);
         setTimeout(() => {
           setAnalysisResult(`Demo Analysis Results:
@@ -149,9 +153,17 @@ This is a demonstration. For real AI analysis, configure your OpenRouter API key
       // Complete progress
       setAnalysisProgress(100);
       
-      // Provide fallback analysis instead of showing error
+      // Handle successful response
       setTimeout(() => {
-        setAnalysisResult(`Demo Analysis Results:
+        if (data?.analysis && typeof data.analysis === 'string' && data.analysis.trim().length > 0) {
+          setAnalysisResult(data.analysis.trim());
+          toast({
+            title: "Analysis complete",
+            description: "Image has been successfully analyzed with AI vision.",
+          });
+        } else {
+          // Fallback if no analysis in response
+          setAnalysisResult(`Demo Analysis Results:
 
 1) Crop Type: Unable to determine - API configuration needed
 2) Health Status: Requires OpenRouter API key setup
@@ -160,32 +172,49 @@ This is a demonstration. For real AI analysis, configure your OpenRouter API key
 5) Recommendations: Configure OpenRouter API key in Supabase for detailed analysis
 
 This is a demonstration response. For real AI-powered image analysis, please set up your OpenRouter API key.`);
-        
-        toast({
-          title: "Demo analysis shown",
-          description: "Set up OpenRouter API key for real AI analysis.",
-        });
-      }, 800);
-      
-      // Small delay to show completion with smooth transition
-      setTimeout(() => {
-        setAnalysisResult(data?.analysis || "No analysis returned");
-        
-        toast({
-          title: "Analysis complete",
-          description: "Image has been successfully analyzed with AI vision.",
-        });
+          
+          toast({
+            title: "Demo analysis shown",
+            description: "Set up OpenRouter API key for real AI analysis.",
+          });
+        }
       }, 800);
       
     } catch (error) {
       console.error("Error analyzing image:", error);
       setAnalysisProgress(0);
+      
+      // Provide user-friendly error message
+      setTimeout(() => {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+        setAnalysisResult(`Demo Analysis Results:
+
+1) Crop Type: Unable to determine due to connection error
+2) Health Status: Analysis failed - please try again
+3) Growth Stage: Unable to assess at this time
+4) Visible Issues: Connection error occurred (${errorMessage})
+5) Recommendations: Check your internet connection and try again
+
+This is a demo response due to a connection error. For real AI analysis, ensure your OpenRouter API key is properly configured.`);
+        
+        toast({
+          title: "Analysis failed",
+          description: `There was an error analyzing the image: ${errorMessage}`,
+          variant: "destructive"
+        });
+      }, 500);
     } finally {
       setTimeout(() => {
         setIsAnalyzing(false);
       }, 800);
     }
-  };
+  }, [selectedImage, isAnalyzing, toast]);
+
+  // Debounced click handler to prevent rapid clicking
+  const handleAnalyzeClick = useCallback(() => {
+    if (isAnalyzing) return;
+    analyzeImage();
+  }, [analyzeImage, isAnalyzing]);
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
@@ -292,8 +321,10 @@ This is a demonstration response. For real AI-powered image analysis, please set
 
           {/* Analyze Button - Blended style */}
           <Button 
-            onClick={analyzeImage} 
-            className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] rounded-xl"
+            onClick={handleAnalyzeClick} 
+            className={`w-full h-14 text-lg font-semibold bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl ${
+              isAnalyzing ? 'cursor-not-allowed opacity-75' : 'hover:scale-[1.02]'
+            }`}
             disabled={isAnalyzing}
           >
             {isAnalyzing ? (

@@ -20,18 +20,25 @@ import {
 } from "lucide-react";
 
 const Navbar = () => {
-  const { user, signOut } = useAuth();
+  const { user, signOut, isLoading } = useAuth();
   const { cartItems } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
   const location = useLocation();
 
   const itemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   const handleSignOut = async () => {
     try {
+      setIsSigningOut(true);
       await signOut();
+      // Close mobile menu if open
+      setIsMenuOpen(false);
     } catch (error) {
       console.error("Error signing out:", error);
+      // Error handling is already done in AuthContext
+    } finally {
+      setIsSigningOut(false);
     }
   };
 
@@ -111,10 +118,11 @@ const Navbar = () => {
                     variant="ghost"
                     size="sm"
                     onClick={handleSignOut}
+                    disabled={isSigningOut || isLoading}
                     className="space-x-2 text-muted-foreground hover:text-destructive"
                   >
                     <LogOut className="h-4 w-4" />
-                    <span>Sign Out</span>
+                    <span>{isSigningOut ? "Signing out..." : "Sign Out"}</span>
                   </Button>
                 </div>
               ) : (
@@ -203,10 +211,11 @@ const Navbar = () => {
                                 handleSignOut();
                                 setIsMenuOpen(false);
                               }}
-                              className="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all duration-300 w-full text-left"
+                              disabled={isSigningOut || isLoading}
+                              className="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all duration-300 w-full text-left disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                               <LogOut className="h-5 w-5" />
-                              <span>Sign Out</span>
+                              <span>{isSigningOut ? "Signing out..." : "Sign Out"}</span>
                             </button>
                           </>
                         ) : (

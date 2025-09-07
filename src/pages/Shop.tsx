@@ -248,7 +248,7 @@ const Shop = () => {
                 <div className="flex justify-between items-center">
                   <span className="font-semibold">Total:</span>
                   <span className="font-bold text-lg text-primary">
-                    ${cartTotal.toFixed(2)}
+                    ₹{cartTotal.toFixed(2)}
                   </span>
                 </div>
                 

@@ -42,7 +42,11 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
       } catch (error) {
         console.error("Error parsing saved favorites:", error);
         localStorage.removeItem("favorites");
+        setFavoriteItems([]);
       }
+    } else {
+      // Clear favorites if no saved favorites
+      setFavoriteItems([]);
     }
   }, [user]);
 

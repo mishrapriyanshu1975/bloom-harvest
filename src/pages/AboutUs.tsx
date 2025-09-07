@@ -78,42 +78,31 @@ const AboutUs = () => {
           
           <div className="bg-farm-green/5 rounded-2xl p-8 mb-16">
             <h2 className="text-3xl font-bold text-farm-green-dark mb-6 text-center">Meet Our Team</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              <div className="text-center  ">
+                <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4 ">
                   <img 
-                    src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=300&q=80" 
-                    alt="Sarah Johnson" 
-                    className="w-full h-full object-cover"
+                    src="Priyanshu.jpg" 
+                    alt=" Priyanshu Mishra" 
+                    className="w-full h-full object-cover hover:scale-105 transition-all duration-300 "
                   />
                 </div>
-                <h3 className="text-xl font-semibold text-farm-green-dark">Sarah Johnson</h3>
-                <p className="text-gray-600">Founder & Head Farmer</p>
+                <h3 className="text-xl font-semibold text-farm-green-dark"> Priyanshu Mishra</h3>
+                <p className="text-gray-600">Frontend Developer</p>
               </div>
               
               <div className="text-center">
                 <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4">
                   <img 
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80" 
-                    alt="Michael Wilson" 
-                    className="w-full h-full object-cover"
+                    src="Saksham.jpg" 
+                    alt=" Saksham" 
+                    className="w-[170%] h-[170%] -mt-10 object-cover rounded-2xl scale-500 hover:scale-105 transition-all duration-300"
                   />
                 </div>
-                <h3 className="text-xl font-semibold text-farm-green-dark">Michael Wilson</h3>
-                <p className="text-gray-600">Operations Manager</p>
+                <h3 className="text-xl font-semibold text-farm-green-dark">Saksham kumar</h3>
+                <p className="text-gray-600"> UI/UX Designer</p>
               </div>
               
-              <div className="text-center">
-                <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4">
-                  <img 
-                    src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80" 
-                    alt="Emily Rodriguez" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <h3 className="text-xl font-semibold text-farm-green-dark">Emily Rodriguez</h3>
-                <p className="text-gray-600">Customer Relations</p>
-              </div>
             </div>
           </div>
           

@@ -27,20 +27,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
+        console.log('Auth state change:', event, session?.user?.id);
+        
         setSession(session);
         setUser(session?.user ?? null);
+        
         if (event === 'SIGNED_IN') {
           toast({
             title: "Signed in successfully",
             description: "Welcome back to FarmFresh!",
           });
         }
+        
         if (event === 'SIGNED_OUT') {
-          toast({
-            title: "Signed out successfully",
-            description: "You have been signed out.",
-          });
+          // Only show toast if this wasn't triggered by our signOut function
+          // (which already handles the state clearing)
+          if (session === null && user !== null) {
+            toast({
+              title: "Signed out successfully",
+              description: "You have been signed out.",
+            });
+          }
+          
+          // Clear localStorage data on sign out
+          localStorage.removeItem("cart");
+          localStorage.removeItem("favorites");
         }
+        
+        setIsLoading(false);
       }
     );
 
@@ -52,7 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
 
     return () => subscription.unsubscribe();
-  }, [toast]);
+  }, [toast, user]);
 
   const signUp = async (email: string, password: string) => {
     try {
@@ -95,8 +109,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signOut = async () => {
     try {
+      setIsLoading(true);
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
+      
+      // Clear local state immediately
+      setSession(null);
+      setUser(null);
+      
+      // Clear localStorage data
+      localStorage.removeItem("cart");
+      localStorage.removeItem("favorites");
+      
     } catch (error: any) {
       toast({
         title: "Error signing out",
@@ -104,6 +128,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         variant: "destructive",
       });
       throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
 

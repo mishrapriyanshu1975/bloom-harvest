@@ -52,7 +52,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           } catch (error) {
             console.error("Error parsing saved cart:", error);
             localStorage.removeItem("cart");
+            setCartItems([]);
           }
+        } else {
+          // Clear cart if no saved cart and no user
+          setCartItems([]);
         }
         return;
       }
