@@ -112,7 +112,7 @@ export default function Auth() {
           <p className="text-muted-foreground text-center mb-6">
             {isLogin
               ? "Sign in to access AI Vision Tools and more"
-              : "Join FarmFresh and get fresh products delivered to your doorstep"}
+              : "Join AgroConnect and get fresh products delivered to your doorstep"}
           </p>
 
           {/* Feature highlight */}

@@ -51,8 +51,8 @@ This is a demonstration response. To get real AI-powered image analysis, please 
       headers: {
         'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://farmfresh.lovable.app',
-        'X-Title': 'FarmFresh Image Analysis',
+        'HTTP-Referer': 'https://agroconnect.lovable.app',
+        'X-Title': 'AgroConnect Image Analysis',
       },
       body: JSON.stringify({
         model: 'google/gemini-pro-vision',

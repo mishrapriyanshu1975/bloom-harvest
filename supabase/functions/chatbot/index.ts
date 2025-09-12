@@ -65,8 +65,8 @@ serve(async (req) => {
       headers = {
         'Authorization': `Bearer ${API_KEY}`,
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://farmfresh.lovable.app',
-        'X-Title': 'FarmFresh AI Assistant',
+        'HTTP-Referer': 'https://agroconnect.lovable.app',
+        'X-Title': 'AgroConnect AI Assistant',
       };
     } 
     // Fallback to OpenAI if available
@@ -114,7 +114,7 @@ serve(async (req) => {
         messages: [
           {
             role: 'system',
-            content: 'You are FarmBot, a friendly agricultural assistant for FarmFresh marketplace. Help users with farming questions, product information, and cooking tips. Keep responses concise and helpful.'
+            content: 'You are AgroBot, a friendly agricultural assistant for AgroConnect marketplace. Help users with farming questions, product information, and cooking tips. Keep responses concise and helpful.'
           },
           {
             role: 'user',
