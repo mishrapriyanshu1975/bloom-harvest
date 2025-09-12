@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,14 +8,17 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { CartProvider } from "./contexts/CartContext";
 import { FavoritesProvider } from "./contexts/FavoritesContext";
-import Index from "./pages/Index";
-import Shop from "./pages/Shop";
-import AboutUs from "./pages/AboutUs";
-import ContactUs from "./pages/ContactUs";
-import Auth from "./pages/Auth";
-import NotFound from "./pages/NotFound";
-import ImageAnalysis from "./pages/ImageAnalysis";
-import OrderHistory from "./pages/OrderHistory";
+import LoadingScreen from "./components/LoadingScreen";
+
+// Lazy load components for better performance
+const Index = lazy(() => import("./pages/Index"));
+const Shop = lazy(() => import("./pages/Shop"));
+const AboutUs = lazy(() => import("./pages/AboutUs"));
+const ContactUs = lazy(() => import("./pages/ContactUs"));
+const Auth = lazy(() => import("./pages/Auth"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const ImageAnalysis = lazy(() => import("./pages/ImageAnalysis"));
+const OrderHistory = lazy(() => import("./pages/OrderHistory"));
 
 const queryClient = new QueryClient();
 
@@ -28,17 +31,19 @@ const App = () => (
             <Toaster />
             <Sonner />
             <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/shop" element={<Shop />} />
-                <Route path="/about" element={<AboutUs />} />
-                <Route path="/contact" element={<ContactUs />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/image-analysis" element={<ImageAnalysis />} />
-                <Route path="/orders" element={<OrderHistory />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+              <Suspense fallback={<LoadingScreen />}>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/shop" element={<Shop />} />
+                  <Route path="/about" element={<AboutUs />} />
+                  <Route path="/contact" element={<ContactUs />} />
+                  <Route path="/auth" element={<Auth />} />
+                  <Route path="/image-analysis" element={<ImageAnalysis />} />
+                  <Route path="/orders" element={<OrderHistory />} />
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
             </BrowserRouter>
           </TooltipProvider>
         </FavoritesProvider>
