@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
@@ -19,12 +20,16 @@ const Hero = () => {
               Support local farmers and enjoy the freshest seasonal offerings.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Button className="bg-farm-green hover:bg-farm-green-dark text-white rounded-full px-8 py-6">
-                Shop Now <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button variant="outline" className="border-farm-green text-farm-green hover:bg-farm-green/10 rounded-full px-8 py-6">
-                Learn More
-              </Button>
+              <Link to="/shop">
+                <Button className="bg-farm-green hover:bg-farm-green-dark text-white rounded-full px-8 py-6 transition-all duration-300 hover:shadow-lg hover:shadow-farm-green/30 hover:scale-105">
+                  Shop Now <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link to="/about">
+                <Button variant="outline" className="border-farm-green text-farm-green hover:bg-farm-green/10 rounded-full px-8 py-6 transition-all duration-300 hover:shadow-lg hover:scale-105">
+                  Learn More
+                </Button>
+              </Link>
             </div>
           </div>
           <div className="relative rounded-2xl overflow-hidden shadow-2xl animate-fade-in" style={{ animationDelay: '0.5s' }}>

@@ -247,7 +247,7 @@ const Testimonials = () => {
                   variant="outline"
                   size="lg"
                   className="flex-1 rounded-full font-semibold border-2 transition-all duration-300"
-                  onClick={() => window.location.href = '/about-us'}
+                  onClick={() => window.location.href = '/about'}
                 >
                   Learn More
                 </Button>
