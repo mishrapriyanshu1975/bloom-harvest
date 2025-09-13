@@ -19,6 +19,7 @@ import {
   Package,
   Sprout
 } from "lucide-react";
+import Cart from "./Cart";
 
 const Navbar = () => {
   const { user, signOut, isLoading } = useAuth();
@@ -136,7 +137,7 @@ const Navbar = () => {
               )}
 
               {/* Cart Button */}
-              <Link to="/shop">
+              <Cart>
                 <Button 
                   variant="ghost" 
                   size="sm" 
@@ -149,7 +150,7 @@ const Navbar = () => {
                     </Badge>
                   )}
                 </Button>
-              </Link>
+              </Cart>
 
               {/* Mobile Menu */}
               <div className="md:hidden">

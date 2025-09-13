@@ -30,7 +30,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 
 const Shop = () => {
-  const { cartItems, cartTotal, checkout } = useCart();
+  const { cartItems, cartTotal, checkout, updateQuantity } = useCart();
   const { user } = useAuth();
   const { toast } = useToast();
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
@@ -221,19 +221,40 @@ const Shop = () => {
                 </Badge>
               </div>
               
-              <div className="space-y-3 mb-4 max-h-32 overflow-y-auto">
+              <div className="space-y-3 mb-4 max-h-40 overflow-y-auto">
                 {cartItems.slice(0, 3).map((item) => (
                   <div key={item.id} className="flex items-center gap-3 text-sm">
                     <img 
-                      src={item.product.image_url || "/placeholder.svg"} 
+                      src={item.product.image || "/placeholder.svg"} 
                       alt={item.product.name}
                       className="w-8 h-8 rounded object-cover"
                     />
                     <div className="flex-1 min-w-0">
                       <p className="truncate font-medium">{item.product.name}</p>
                       <p className="text-muted-foreground text-xs">
-                        {item.quantity} × ₹{item.product.price.toFixed(2)}
+                        ₹{item.product.price.toFixed(2)} each
                       </p>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="h-6 w-6 p-0 rounded-full"
+                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      >
+                        -
+                      </Button>
+                      <span className="text-xs font-medium w-6 text-center">
+                        {item.quantity}
+                      </span>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="h-6 w-6 p-0 rounded-full"
+                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      >
+                        +
+                      </Button>
                     </div>
                   </div>
                 ))}

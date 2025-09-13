@@ -1,13 +1,5 @@
 
-// Import all product images
-import organicRedApples from '@/assets/organic-red-apples.jpg';
-import freshGardenSpinach from '@/assets/fresh-garden-spinach.jpg';
-import freeRangeEggs from '@/assets/free-range-eggs.jpg';
-import heirloomTomatoes from '@/assets/heirloom-tomatoes.jpg';
-import wildflowerHoney from '@/assets/wildflower-honey.jpg';
-import freshBasil from '@/assets/fresh-basil.jpg';
-import wholeGrainBread from '@/assets/whole-grain-bread.jpg';
-import grassFedBeef from '@/assets/grass-fed-beef.jpg';
+// All product images now use reliable Unsplash URLs
 
 export const products = [
   {
@@ -16,7 +8,7 @@ export const products = [
     category: "Fruits",
     price: 180,
     unit: "kg",
-    image: organicRedApples,
+    image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=600&q=80",
     discount: true,
     oldPrice: 220,
     badge: "Sale",
@@ -29,7 +21,7 @@ export const products = [
     category: "Vegetables",
     price: 45,
     unit: "bunch",
-    image: freshGardenSpinach,
+    image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=600&q=80",
     organic: true,
     description: "Nutrient-rich organic spinach leaves, freshly harvested from our sustainable farm. Great for salads, smoothies, or cooking."
   },
@@ -39,7 +31,7 @@ export const products = [
     category: "Dairy",
     price: 150,
     unit: "dozen",
-    image: freeRangeEggs,
+    image: "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=600&q=80",
     badge: "New",
     description: "Farm-fresh eggs from free-range chickens. These eggs have bright yellow yolks and exceptional flavor."
   },
@@ -49,7 +41,7 @@ export const products = [
     category: "Vegetables",
     price: 120,
     unit: "lb",
-    image: heirloomTomatoes,
+    image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80",
     organic: true,
     description: "Colorful mix of heirloom tomato varieties, each with unique flavor profiles. Perfect for salads and gourmet dishes."
   },
@@ -59,7 +51,7 @@ export const products = [
     category: "Honey",
     price: 320,
     unit: "jar",
-    image: wildflowerHoney,
+    image: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=600&q=80",
     organic: true,
     description: "Pure, unfiltered wildflower honey collected from local bee farms. Rich in flavor and natural enzymes."
   },
@@ -69,7 +61,7 @@ export const products = [
     category: "Herbs",
     price: 40,
     unit: "bunch",
-    image: freshBasil,
+    image: "https://images.unsplash.com/photo-1618375569909-3c8616cf7733?auto=format&fit=crop&w=600&q=80",
     organic: true,
     description: "Aromatic fresh basil with vibrant green leaves. Essential for Italian cooking, pesto, and summer salads."
   },
@@ -79,7 +71,7 @@ export const products = [
     category: "Bread",
     price: 140,
     unit: "loaf",
-    image: wholeGrainBread,
+    image: "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=600&q=80",
     description: "Freshly baked whole grain bread made with organic flour. Hearty and delicious with a perfect crust."
   },
   {
@@ -88,7 +80,7 @@ export const products = [
     category: "Meat",
     price: 450,
     unit: "lb",
-    image: grassFedBeef,
+    image: "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=600&q=80",
     badge: "Premium",
     discount: true,
     oldPrice: 520,
@@ -132,7 +124,7 @@ export const products = [
     category: "Pantry",
     price: 480,
     unit: "16oz",
-    image: "https://images.unsplash.com/photo-1589496933738-f5c27eb03dd6?auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=600&q=80",
     organic: true,
     description: "Pure maple syrup harvested and produced locally. Rich amber color with complex, sweet flavor perfect for breakfast."
   },
@@ -152,7 +144,7 @@ export const products = [
     category: "Fish",
     price: 650,
     unit: "lb",
-    image: "https://images.unsplash.com/photo-1544943620-1a1b96aaef2b?auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1599084993091-1cb5c0721cc6?auto=format&fit=crop&w=600&q=80",
     badge: "Fresh",
     description: "Premium wild-caught salmon fillet, rich in omega-3 fatty acids. Sustainably sourced and perfect for grilling or baking."
   },
@@ -181,7 +173,7 @@ export const products = [
     category: "Vegetables",
     price: 80,
     unit: "bunch",
-    image: "https://images.unsplash.com/photo-1515543904379-3d37e9329b00?auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1622205313162-be1d5712a43f?auto=format&fit=crop&w=600&q=80",
     organic: true,
     badge: "Superfood",
     description: "Nutrient-dense organic kale leaves, perfect for salads, smoothies, or sautéing. High in vitamins A, C, and K."
@@ -254,7 +246,7 @@ export const products = [
     category: "Dairy",
     price: 180,
     unit: "32oz",
-    image: "https://images.unsplash.com/photo-1571212515416-6bb9a2b8ce4c?auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=600&q=80",
     description: "Thick, creamy Greek yogurt made from local milk. High in protein and probiotics for digestive health."
   },
   {
@@ -273,7 +265,7 @@ export const products = [
     category: "Grains",
     price: 180,
     unit: "32oz canister",
-    image: "https://images.unsplash.com/photo-1517260739729-c0566ccf276b?auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=600&q=80",
     organic: true,
     badge: "Heart Healthy",
     description: "Premium steel cut oats with a hearty texture and nutty flavor. Rich in fiber and perfect for breakfast."
@@ -294,7 +286,7 @@ export const products = [
     category: "Grains",
     price: 280,
     unit: "1lb bag",
-    image: "https://images.unsplash.com/photo-1543826173-0bcd245e03d2?auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80",
     organic: true,
     badge: "Premium",
     description: "Exotic blend of wild and brown rice with a distinctive nutty flavor and beautiful presentation."
@@ -305,7 +297,7 @@ export const products = [
     category: "Grains",
     price: 100,
     unit: "1lb bag",
-    image: "https://images.unsplash.com/photo-1574870111867-089730e5a72b?auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80",
     organic: true,
     description: "Quick-cooking bulgur wheat, perfect for tabbouleh, pilafs, and Mediterranean dishes."
   },
@@ -315,7 +307,7 @@ export const products = [
     category: "Grains",
     price: 80,
     unit: "1lb bag",
-    image: "https://images.unsplash.com/photo-1602209982016-d8bf3641eb72?auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?auto=format&fit=crop&w=600&q=80",
     organic: true,
     description: "Protein-rich organic black beans, perfect for Mexican dishes, soups, and salads."
   },
@@ -325,7 +317,7 @@ export const products = [
     category: "Grains",
     price: 90,
     unit: "1lb bag",
-    image: "https://images.unsplash.com/photo-1607627000458-210e8d2a27b0?auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1559181567-c3190ca9959b?auto=format&fit=crop&w=600&q=80",
     organic: true,
     description: "Quick-cooking red lentils that break down beautifully in curries and soups. High in protein and fiber."
   },
@@ -416,7 +408,7 @@ export const products = [
     category: "Vegetables",
     price: 80,
     unit: "head",
-    image: "https://images.unsplash.com/photo-1568584711271-946d80d0bf50?auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1510627489930-0c1b0bfb6785?auto=format&fit=crop&w=600&q=80",
     organic: true,
     description: "Crisp white cauliflower head, versatile for roasting, mashing, or making cauliflower rice."
   },
@@ -426,7 +418,7 @@ export const products = [
     category: "Vegetables",
     price: 90,
     unit: "1lb bag",
-    image: "https://images.unsplash.com/photo-1550087763-6a8f05b94ade?auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=600&q=80",
     organic: true,
     description: "Mini cabbages with a slightly bitter, nutty flavor. Delicious roasted with olive oil and seasonings."
   },
@@ -436,7 +428,7 @@ export const products = [
     category: "Vegetables",
     price: 80,
     unit: "2lb bag",
-    image: "https://images.unsplash.com/photo-1601470982235-8cf23e8f5c1b?auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=600&q=80",
     organic: true,
     description: "Tender organic zucchini perfect for grilling, baking into bread, or spiralizing into noodles."
   },
@@ -467,7 +459,7 @@ export const products = [
     category: "Vegetables",
     price: 140,
     unit: "bunch",
-    image: "https://images.unsplash.com/photo-1550058726-f41e0e7ab135?auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?auto=format&fit=crop&w=600&q=80",
     organic: true,
     badge: "Spring Harvest",
     description: "Tender spring asparagus spears with a delicate flavor. Perfect for grilling, roasting, or steaming."
@@ -478,7 +470,7 @@ export const products = [
     category: "Vegetables",
     price: 80,
     unit: "bunch",
-    image: "https://images.unsplash.com/photo-1603048719539-9ecef1a71a6c?auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=600&q=80",
     organic: true,
     description: "Earthy, sweet beets with leafy greens attached. Rich in folate and perfect for roasting or juicing."
   },
@@ -488,7 +480,7 @@ export const products = [
     category: "Vegetables",
     price: 60,
     unit: "3-pack",
-    image: "https://images.unsplash.com/photo-1604977042946-2716c3b37010?auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?auto=format&fit=crop&w=600&q=80",
     organic: true,
     description: "Crisp, refreshing cucumbers perfect for salads, pickling, or infused water."
   },
@@ -498,7 +490,7 @@ export const products = [
     category: "Vegetables",
     price: 40,
     unit: "bunch",
-    image: "https://images.unsplash.com/photo-1606156834265-bb65ef7b7e3b?auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&w=600&q=80",
     organic: true,
     description: "Peppery radishes with a crisp texture. Great for salads, roasting, or as a crunchy snack."
   },
@@ -518,7 +510,7 @@ export const products = [
     category: "Vegetables",
     price: 180,
     unit: "8oz package",
-    image: "https://images.unsplash.com/photo-1614791401186-83bfade02ce4?auto=format&fit=crop&w=600&q=80",
+    image: "https://images.unsplash.com/photo-1506976785307-8732e854ad03?auto=format&fit=crop&w=600&q=80",
     organic: true,
     badge: "Gourmet",
     description: "Mix of shiitake, oyster, and cremini mushrooms. Rich umami flavor perfect for cooking and sautéing."

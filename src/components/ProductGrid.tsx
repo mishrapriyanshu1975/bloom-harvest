@@ -17,8 +17,8 @@ const ProductGrid = ({ activeCategory, activeFilters }: ProductGridProps) => {
   const { toast } = useToast();
   const { addToCart } = useCart();
 
-  // Filter products based on selected category and filters
-  const filteredProducts = products.filter(product => {
+  // Filter and sort products based on selected category and filters
+  let filteredProducts = products.filter(product => {
     // Filter by category if one is selected
     if (activeCategory && product.category.toLowerCase() !== activeCategory.toLowerCase()) {
       return false;
@@ -41,6 +41,22 @@ const ProductGrid = ({ activeCategory, activeFilters }: ProductGridProps) => {
       return false;
     }
 
+    if (activeFilters.newProducts && product.badge !== "New") {
+      return false;
+    }
+
+    if (activeFilters.superfood && product.badge !== "Superfood") {
+      return false;
+    }
+
+    if (activeFilters.heartHealthy && product.badge !== "Heart Healthy") {
+      return false;
+    }
+
+    if (activeFilters.proteinRich && product.badge !== "Protein-Rich") {
+      return false;
+    }
+
     // Price range filter
     if (activeFilters.priceRange) {
       const [min, max] = activeFilters.priceRange;
@@ -51,6 +67,30 @@ const ProductGrid = ({ activeCategory, activeFilters }: ProductGridProps) => {
 
     return true;
   });
+
+  // Apply sorting
+  if (activeFilters.sortBy) {
+    filteredProducts = [...filteredProducts].sort((a, b) => {
+      switch (activeFilters.sortBy) {
+        case 'name':
+          return a.name.localeCompare(b.name);
+        case 'name-desc':
+          return b.name.localeCompare(a.name);
+        case 'price-low':
+          return a.price - b.price;
+        case 'price-high':
+          return b.price - a.price;
+        case 'category':
+          return a.category.localeCompare(b.category);
+        case 'organic':
+          return (b.organic ? 1 : 0) - (a.organic ? 1 : 0);
+        case 'discount':
+          return (b.discount ? 1 : 0) - (a.discount ? 1 : 0);
+        default:
+          return 0;
+      }
+    });
+  }
 
   const handleAddToCart = async (product: any) => {
     try {
