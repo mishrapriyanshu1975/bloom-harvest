@@ -9,11 +9,13 @@ import Testimonials from '@/components/Testimonials';
 import Newsletter from '@/components/Newsletter';
 import Footer from '@/components/Footer';
 import Chatbot from '@/components/Chatbot';
+import WelcomeMessage from '@/components/WelcomeMessage';
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
+      <WelcomeMessage />
       <main>
         <Hero />
         <FeaturedProducts />

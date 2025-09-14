@@ -28,15 +28,16 @@ import {
   CreditCard
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import CheckoutForm from '@/components/CheckoutForm';
 
 const Shop = () => {
-  const { cartItems, cartTotal, checkout, updateQuantity } = useCart();
+  const { cartItems, cartTotal, updateQuantity } = useCart();
   const { user } = useAuth();
   const { toast } = useToast();
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [activeFilters, setActiveFilters] = useState<Record<string, any>>({});
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [showCheckout, setShowCheckout] = useState(false);
 
   const handleCategoryChange = (category: string | null) => {
     setActiveCategory(category);
@@ -51,7 +52,7 @@ const Shop = () => {
     setActiveFilters({});
   };
 
-  const handleCheckout = async () => {
+  const handleCheckout = () => {
     if (!user) {
       toast({
         title: "Please sign in",
@@ -70,18 +71,7 @@ const Shop = () => {
       return;
     }
 
-    setIsCheckingOut(true);
-    try {
-      const orderId = await checkout();
-      if (orderId) {
-        // Redirect to orders page or show success message
-        window.location.href = '/orders';
-      }
-    } catch (error) {
-      console.error("Checkout error:", error);
-    } finally {
-      setIsCheckingOut(false);
-    }
+    setShowCheckout(true);
   };
   const activeFilterCount = Object.keys(activeFilters).length + (activeCategory ? 1 : 0);
 
@@ -275,20 +265,10 @@ const Shop = () => {
                 
                 <Button 
                   onClick={handleCheckout}
-                  disabled={isCheckingOut}
                   className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl py-6 font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                 >
-                  {isCheckingOut ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
-                      Processing...
-                    </>
-                  ) : (
-                    <>
-                      <CreditCard className="h-5 w-5 mr-2" />
-                      Place Order
-                    </>
-                  )}
+                  <CreditCard className="h-5 w-5 mr-2" />
+                  Place Order
                 </Button>
               </div>
             </div>
@@ -328,6 +308,12 @@ const Shop = () => {
           </div>
         </div>
       </main>
+      
+      {/* Checkout Form */}
+      <CheckoutForm 
+        isOpen={showCheckout} 
+        onClose={() => setShowCheckout(false)} 
+      />
       
       <Footer />
     </div>

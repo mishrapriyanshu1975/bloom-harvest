@@ -19,6 +19,7 @@ const Auth = lazy(() => import("./pages/Auth"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ImageAnalysis = lazy(() => import("./pages/ImageAnalysis"));
 const OrderHistory = lazy(() => import("./pages/OrderHistory"));
+const FarmerDashboard = lazy(() => import("./pages/FarmerDashboard"));
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ const App = () => (
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/image-analysis" element={<ImageAnalysis />} />
                   <Route path="/orders" element={<OrderHistory />} />
+                  <Route path="/farmer-dashboard" element={<FarmerDashboard />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>

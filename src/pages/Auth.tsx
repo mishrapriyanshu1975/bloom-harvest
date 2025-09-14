@@ -18,9 +18,11 @@ import {
 } from "@/components/ui/form";
 import { Loader2, Facebook, Mail, Camera, Eye } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import RoleSelection from "@/components/RoleSelection";
 import { supabase } from "@/integrations/supabase/client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Link } from "react-router-dom";
+import DummyCredentials from "@/components/DummyCredentials";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -36,7 +38,9 @@ export default function Auth() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [socialLoading, setSocialLoading] = useState<string | null>(null);
   const [emailSent, setEmailSent] = useState(false);
-  const { user, signIn, signUp } = useAuth();
+  const [showRoleSelection, setShowRoleSelection] = useState(false);
+  const [pendingAuth, setPendingAuth] = useState(false);
+  const { user, userRole, signIn, signUp, setUserRole } = useAuth();
 
   const form = useForm<FormData>({
     resolver: zodResolver(isLogin ? loginSchema : signupSchema),
@@ -51,10 +55,18 @@ export default function Auth() {
     try {
       if (isLogin) {
         await signIn(data.email, data.password);
+        // Check if it's a real user (not dummy) and needs role selection
+        const isDummyUser = localStorage.getItem('dummyUser');
+        if (!isDummyUser) {
+          setPendingAuth(true);
+          setShowRoleSelection(true);
+        }
       } else {
         await signUp(data.email, data.password);
         setEmailSent(true);
-        setIsLogin(true);
+        // After successful signup, show role selection
+        setPendingAuth(true);
+        setShowRoleSelection(true);
       }
     } catch (error) {
       console.error("Authentication error:", error);
@@ -97,8 +109,34 @@ export default function Auth() {
     }
   }
 
-  if (user) {
-    return <Navigate to="/" />;
+  // Handle role selection after authentication
+  const handleRoleSelect = async (role: 'farmer' | 'consumer') => {
+    await setUserRole(role);
+    setShowRoleSelection(false);
+    setPendingAuth(false);
+    
+    // Redirect based on role
+    setTimeout(() => {
+      if (role === 'farmer') {
+        window.location.href = '/farmer-dashboard';
+      } else {
+        window.location.href = '/';
+      }
+    }, 500);
+  };
+
+  // Show role selection for new users or users without role
+  if (showRoleSelection || (user && !userRole && !localStorage.getItem('dummyUser'))) {
+    return <RoleSelection onRoleSelect={handleRoleSelect} />;
+  }
+
+  // Redirect authenticated users with roles
+  if (user && userRole && !pendingAuth) {
+    if (userRole === 'farmer') {
+      return <Navigate to="/farmer-dashboard" />;
+    } else {
+      return <Navigate to="/" />;
+    }
   }
 
   return (

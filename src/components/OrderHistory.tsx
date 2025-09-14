@@ -68,7 +68,13 @@ const OrderHistory = () => {
                 <CardTitle className="text-lg">Order #{order.id}</CardTitle>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
                   <Calendar className="h-4 w-4" />
-                  {new Date(order.created_at).toLocaleDateString()}
+                  {new Date(order.createdAt || order.created_at).toLocaleDateString('en-IN', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })}
                 </div>
               </div>
               <Badge variant={order.status === 'completed' ? 'default' : 'secondary'}>
@@ -77,15 +83,46 @@ const OrderHistory = () => {
             </div>
           </CardHeader>
           <CardContent>
-            {order.order_items && order.order_items.length > 0 ? (
-              <div className="space-y-2">
+            {order.items && order.items.length > 0 ? (
+              <div className="space-y-3">
                 <h4 className="font-medium text-sm">Items:</h4>
-                {order.order_items.map((item: any) => (
-                  <div key={item.id} className="flex justify-between text-sm">
-                    <span>Product #{item.product_id} x{item.quantity}</span>
-                    <span>₹{item.price_at_purchase}</span>
+                <div className="space-y-2">
+                  {order.items.map((item: any, index: number) => (
+                    <div key={index} className="flex items-center gap-3 p-2 bg-muted/30 rounded-lg">
+                      {item.productImage && (
+                        <img 
+                          src={item.productImage} 
+                          alt={item.productName}
+                          className="w-12 h-12 rounded object-cover"
+                        />
+                      )}
+                      <div className="flex-1">
+                        <p className="font-medium text-sm">{item.productName}</p>
+                        <p className="text-xs text-muted-foreground">
+                          Quantity: {item.quantity} × ₹{item.price.toFixed(2)}
+                        </p>
+                      </div>
+                      <p className="font-medium text-sm">
+                        ₹{(item.quantity * item.price).toFixed(2)}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex justify-between items-center pt-2 border-t">
+                  <span className="font-medium">Total Amount:</span>
+                  <span className="font-bold text-lg text-primary">₹{order.total?.toFixed(2)}</span>
+                </div>
+                {order.shippingAddress && (
+                  <div className="mt-3 p-3 bg-muted/20 rounded-lg">
+                    <h5 className="font-medium text-sm mb-2">Delivery Address:</h5>
+                    <p className="text-sm text-muted-foreground">
+                      {order.shippingAddress.fullName}<br/>
+                      {order.shippingAddress.address}<br/>
+                      {order.shippingAddress.city}, {order.shippingAddress.state} - {order.shippingAddress.pincode}<br/>
+                      Phone: {order.shippingAddress.phone}
+                    </p>
                   </div>
-                ))}
+                )}
               </div>
             ) : (
               <p className="text-sm text-muted-foreground">No items found</p>

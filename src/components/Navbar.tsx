@@ -17,12 +17,23 @@ import {
   Phone,
   Info,
   Package,
-  Sprout
+  Sprout,
+  ChevronDown,
+  Settings,
+  UserCircle
 } from "lucide-react";
 import Cart from "./Cart";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
-  const { user, signOut, isLoading } = useAuth();
+  const { user, signOut, isLoading, userRole } = useAuth();
   const { cartItems } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
@@ -110,6 +121,15 @@ const Navbar = () => {
               {/* User Menu */}
               {user ? (
                 <div className="hidden md:flex items-center space-x-2">
+                  <div className="flex items-center space-x-2 px-3 py-2 bg-primary/10 rounded-lg">
+                    <UserCircle className="h-4 w-4 text-primary" />
+                    <span className="font-medium text-sm">
+                      {user.user_metadata?.name || user.email?.split('@')[0] || 'User'}
+                    </span>
+                    <span className="text-xs text-primary capitalize">
+                      ({userRole})
+                    </span>
+                  </div>
                   <Link to="/orders">
                     <Button variant="ghost" size="sm" className="space-x-2">
                       <Package className="h-4 w-4" />
@@ -200,14 +220,34 @@ const Navbar = () => {
                       <div className="space-y-2 pt-4 border-t border-border">
                         {user ? (
                           <>
+                            <div className="px-4 py-3 bg-primary/5 rounded-xl mb-2">
+                              <div className="flex items-center space-x-3">
+                                <UserCircle className="h-8 w-8 text-primary" />
+                                <div>
+                                  <p className="text-sm font-medium">
+                                    {user.user_metadata?.name || user.email?.split('@')[0] || 'User'}
+                                  </p>
+                                  <p className="text-xs text-muted-foreground">
+                                    {user.email}
+                                  </p>
+                                  <p className="text-xs text-primary font-medium capitalize">
+                                    {userRole} Account
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
                             <Link
                               to="/orders"
                               className="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-300"
                               onClick={() => setIsMenuOpen(false)}
                             >
                               <Package className="h-5 w-5" />
-                              <span>Orders</span>
+                              <span>My Orders</span>
                             </Link>
+                            <button className="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-300 w-full text-left">
+                              <Settings className="h-5 w-5" />
+                              <span>Settings</span>
+                            </button>
                             <button
                               onClick={() => {
                                 handleSignOut();

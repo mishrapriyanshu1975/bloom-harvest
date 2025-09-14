@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useCart } from '@/contexts/CartContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from "@/components/ui/button";
@@ -19,18 +19,19 @@ import {
   CreditCard
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import CheckoutForm from './CheckoutForm';
 
 interface CartProps {
   children: React.ReactNode;
 }
 
 const Cart = ({ children }: CartProps) => {
-  const { cartItems, cartTotal, updateQuantity, removeFromCart, checkout } = useCart();
+  const { cartItems, cartTotal, updateQuantity, removeFromCart } = useCart();
   const { user } = useAuth();
   const { toast } = useToast();
-  const [isCheckingOut, setIsCheckingOut] = React.useState(false);
+  const [showCheckout, setShowCheckout] = useState(false);
 
-  const handleCheckout = async () => {
+  const handleCheckout = () => {
     if (!user) {
       toast({
         title: "Please sign in",
@@ -49,17 +50,7 @@ const Cart = ({ children }: CartProps) => {
       return;
     }
 
-    setIsCheckingOut(true);
-    try {
-      const orderId = await checkout();
-      if (orderId) {
-        window.location.href = '/orders';
-      }
-    } catch (error) {
-      console.error("Checkout error:", error);
-    } finally {
-      setIsCheckingOut(false);
-    }
+    setShowCheckout(true);
   };
 
   return (
@@ -164,25 +155,21 @@ const Cart = ({ children }: CartProps) => {
               
               <Button 
                 onClick={handleCheckout}
-                disabled={isCheckingOut}
                 className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl py-6 font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                {isCheckingOut ? (
-                  <>
-                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
-                    Processing...
-                  </>
-                ) : (
-                  <>
-                    <CreditCard className="h-5 w-5 mr-2" />
-                    Checkout ₹{cartTotal.toFixed(2)}
-                  </>
-                )}
+                <CreditCard className="h-5 w-5 mr-2" />
+                Checkout ₹{cartTotal.toFixed(2)}
               </Button>
             </div>
           </>
         )}
       </SheetContent>
+      
+      {/* Checkout Form */}
+      <CheckoutForm 
+        isOpen={showCheckout} 
+        onClose={() => setShowCheckout(false)} 
+      />
     </Sheet>
   );
 };
