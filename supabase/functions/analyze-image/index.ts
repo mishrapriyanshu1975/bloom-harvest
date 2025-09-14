@@ -3,6 +3,9 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// OpenRouter API key - in production, this should be set as an environment variable
+const OPENROUTER_API_KEY = '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';
+
 Deno.serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -12,7 +15,6 @@ Deno.serve(async (req) => {
   try {
     console.log('=== IMAGE ANALYSIS FUNCTION START ===');
     
-    const OPENROUTER_API_KEY = Deno.env.get('OPENROUTER_API_KEY');
     console.log('OPENROUTER_API_KEY exists:', !!OPENROUTER_API_KEY);
     
     if (!OPENROUTER_API_KEY) {

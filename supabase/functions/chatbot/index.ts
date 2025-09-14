@@ -1,6 +1,9 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
+// OpenRouter API key - in production, this should be set as an environment variable
+const OPENROUTER_API_KEY = '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';
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -15,20 +18,15 @@ serve(async (req) => {
   try {
     console.log('=== CHATBOT FUNCTION START ===');
     
-    // Try multiple possible environment variable names
-    let API_KEY = Deno.env.get('OPENROUTER_API_KEY') || 
-                  Deno.env.get('OPENAI_API_KEY') || 
-                  Deno.env.get('GEMINI_API_KEY');
+    let API_KEY = OPENROUTER_API_KEY;
     
     console.log('API_KEY found:', !!API_KEY);
-    console.log('Available env vars:', Object.keys(Deno.env.toObject()));
     
     if (!API_KEY) {
       console.error('No API key found in environment variables');
       return new Response(
         JSON.stringify({ 
-          error: 'API key not configured. Please check your Supabase edge function secrets.',
-          debug: 'Available env vars: ' + Object.keys(Deno.env.toObject()).join(', ')
+          error: 'API key not configured. Please check your OpenRouter API key.'
         }),
         { 
           status: 500, 
@@ -57,51 +55,15 @@ serve(async (req) => {
     let model;
     let headers: any;
 
-    // Check for OpenRouter API key first
-    if (Deno.env.get('OPENROUTER_API_KEY')) {
-      API_KEY = Deno.env.get('OPENROUTER_API_KEY');
-      apiUrl = 'https://openrouter.ai/api/v1/chat/completions';
-      model = 'microsoft/wizardlm-2-8x22b';
-      headers = {
-        'Authorization': `Bearer ${API_KEY}`,
-        'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://agroconnect.lovable.app',
-        'X-Title': 'AgroConnect AI Assistant',
-      };
-    } 
-    // Fallback to OpenAI if available
-    else if (Deno.env.get('OPENAI_API_KEY')) {
-      API_KEY = Deno.env.get('OPENAI_API_KEY');
-      apiUrl = 'https://api.openai.com/v1/chat/completions';
-      model = 'gpt-4o-mini';
-      headers = {
-        'Authorization': `Bearer ${API_KEY}`,
-        'Content-Type': 'application/json',
-      };
-    }
-    // Fallback to Gemini if available
-    else if (Deno.env.get('GEMINI_API_KEY')) {
-      return new Response(
-        JSON.stringify({ 
-          error: 'Gemini API not yet implemented. Please use OpenRouter or OpenAI API key.'
-        }),
-        { 
-          status: 500, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-        }
-      );
-    }
-    else {
-      return new Response(
-        JSON.stringify({ 
-          error: 'No valid API key found. Please configure OPENROUTER_API_KEY or OPENAI_API_KEY.',
-        }),
-        { 
-          status: 500, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-        }
-      );
-    }
+    // Use OpenRouter API
+    apiUrl = 'https://openrouter.ai/api/v1/chat/completions';
+    model = 'microsoft/wizardlm-2-8x22b';
+    headers = {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json',
+      'HTTP-Referer': 'https://agroconnect.lovable.app',
+      'X-Title': 'AgroConnect AI Assistant',
+    };
 
     console.log('Using API URL:', apiUrl);
     console.log('Using model:', model);
